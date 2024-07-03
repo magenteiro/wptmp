@@ -1,0 +1,77 @@
+# Geral
+wp-config.php
+/.htaccess
+/.user.ini
+/license.txt
+/readme.html
+/wp-config-sample.php
+sitemap.xml
+sitemap.xml.gz
+error_log
+php.ini
+php5.ini
+
+# WP core files (podem ser obtidos na instalação)
+/wp-admin/
+/wp-includes/
+/index.php
+/wp-activate.php
+/wp-blog-header.php
+/wp-comments-post.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-load.php
+/wp-login.php
+/wp-mail.php
+/wp-settings.php
+/wp-signup.php
+/wp-trackback.php
+/xmlrpc.php
+
+
+# Conteúdos específicos de logs do Wordpress e enviados pelo usuário
+/wp-content/cache/
+/wp-content/debug.log
+/wp-content/upgrade/
+/wp-content/uploads/
+
+# Temas nativos e plugins específicos
+/wp-content/themes/twenty*/
+/wp-content/plugins/hello.php
+
+# Módulo e dependências de composer
+/node_modules/
+/vendor/
+
+# Arquivos que podem conter informações sensíveis
+/.env
+/.env.example
+/sftp-config.json
+
+# Arquivos específicos de sistemas operacionais
+.DS_Store
+Thumbs.db
+__MACOSX
+
+# Arquivos e pastas de IDEs
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+
+# Arquivos de cache e logs de plugins
+/wp-content/advanced-cache.php
+/wp-content/wp-cache-config.php
+/wp-content/plugins/wp-super-cache/
+/wp-content/plugins/wordfence/tmp/
+/wp-content/plugins/wordfence/waf/
+
+# Extensões sensíveis ou específicas
+*.log
+*.sql
+*.sql.gz
+*.tar
+*.zip
+*.rar
+*.bak
+*.swp
