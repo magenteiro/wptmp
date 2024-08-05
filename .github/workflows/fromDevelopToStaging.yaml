@@ -38,8 +38,8 @@ jobs:
           echo "WP_PATH: $WP_PATH" &&
           pwd &&
           ls -la &&
+          cd wptmp-dev.ricardomartins.net.br &&
           cat estaemdev.txt &&
-          cd $WP_PATH &&
           git pull origin develop &&
 
           # Sync Plugins
