@@ -38,7 +38,7 @@ jobs:
           echo "WP_PATH: $WP_PATH" &&
           pwd &&
           ls -la &&
-          cd $WP_PATH &&
+          cd "$WP_PATH" &&
           cat estaemdev.txt &&
           git pull origin develop &&
 
