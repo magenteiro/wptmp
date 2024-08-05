@@ -79,7 +79,7 @@ jobs:
             else
               wp theme update "$name" --version="$update_version" --allow-root
             fi
-            if [ "$status" = "active" ]; then
+            if [ "$status" = "active" then
               wp theme activate "$name" --allow-root
             fi
           done < themes_to_sync.txt &&
