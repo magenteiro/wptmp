@@ -38,17 +38,17 @@ jobs:
           echo "WP_PATH: $WP_PATH" &&
           pwd &&
           ls -la &&
-          cd wptmp-dev.ricardomartins.net.br &&
+          cd "$WP_PATH" &&
           cat estaemdev.txt &&
           git pull origin develop &&
 
           # Sync Plugins
           wp plugin list --field=name --allow-root > installed_plugins.txt &&
-          grep -oP '"name": "\K[^"]+' .github/workflows/plugins.json > plugins_to_sync.txt &&
+          grep -oP '"'"'name'": "\K[^"]+'"' .github/workflows/plugins.json > plugins_to_sync.txt &&
           while IFS= read -r plugin; do
-            name=$(echo "$plugin" | awk -F'"' '{print $4}')
-            status=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"status": "\K[^"]+')
-            version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"version": "\K[^"]+')
+            name=$(echo "$plugin" | awk -F'"'"'\"'\"' '{print $4}')
+            status=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"'"'status'": "\K[^"]+'"' )
+            version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"'"'version'": "\K[^"]+'"' )
             if ! grep -q "$name" installed_plugins.txt; then
               wp plugin install "$name" --version="$version" --allow-root
             else
@@ -68,12 +68,12 @@ jobs:
 
           # Sync Themes
           wp theme list --field=name --allow-root > installed_themes.txt &&
-          grep -oP '"name": "\K[^"]+' .github/workflows/themes.json > themes_to_sync.txt &&
+          grep -oP '"'"'name'": "\K[^"]+'"' .github/workflows/themes.json > themes_to_sync.txt &&
           while IFS= read -r theme; do
-            name=$(echo "$theme" | awk -F'"' '{print $4}')
-            status=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"status": "\K[^"]+')
-            version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"version": "\K[^"]+')
-            update_version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"update_version": "\K[^"]+')
+            name=$(echo "$theme" | awk -F'"'"'\"'\"' '{print $4}')
+            status=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"'"'status'": "\K[^"]+'"' )
+            version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"'"'version'": "\K[^"]+'"' )
+            update_version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/themes.json | grep -oP '"'"'update_version'": "\K[^"]+'"' )
             if ! grep -q "$name" installed_themes.txt; then
               wp theme install "$name" --version="$version" --allow-root
             else
