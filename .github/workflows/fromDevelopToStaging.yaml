@@ -13,6 +13,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Debug environment
+      run: |
+        php -v
+        which php
+        echo $PATH
+
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -38,4 +44,49 @@ jobs:
 
           # Sync Plugins
           wp plugin list --field=name --allow-root > installed_plugins.txt &&
-          jq -c ".[]" .github/workflows/plugins.json > plugins_to_sync
+          jq -c ".[]" .github/workflows/plugins.json > plugins_to_sync.txt &&
+          while IFS= read -r plugin; do
+            name=$(echo "$plugin" | jq -r ".name")
+            status=$(echo "$plugin" | jq -r ".status")
+            version=$(echo "$plugin" | jq -r ".version")
+            if ! grep -q "$name" installed_plugins.txt; then
+              wp plugin install "$name" --version="$version" --allow-root
+            else
+              wp plugin update "$name" --version="$version" --allow-root
+            fi
+            if [ "$status" = "active" ]; then
+              wp plugin activate "$name" --allow-root
+            else
+              wp plugin deactivate "$name" --allow-root
+            fi
+          done < plugins_to_sync.txt &&
+          for installed_plugin in $(cat installed_plugins.txt); do
+            if ! jq -e ".[] | select(.name == \"$installed_plugin\")" .github/workflows/plugins.json > /dev/null; then
+              wp plugin delete "$installed_plugin" --allow-root
+            fi
+          done &&
+
+          # Sync Themes
+          wp theme list --field=name --allow-root > installed_themes.txt &&
+          jq -c ".[]" .github/workflows/themes.json > themes_to_sync.txt &&
+          while IFS= read -r theme; do
+            name=$(echo "$theme" | jq -r ".name")
+            status=$(echo "$theme" | jq -r ".status")
+            version=$(echo "$theme" | jq -r ".version")
+            update_version=$(echo "$theme" | jq -r ".update_version")
+            if ! grep -q "$name" installed_themes.txt; then
+              wp theme install "$name" --version="$version" --allow-root
+            else
+              wp theme update "$name" --version="$update_version" --allow-root
+            fi
+            if [ "$status" = "active" ]; then
+              wp theme activate "$name" --allow-root
+            fi
+          done < themes_to_sync.txt &&
+          for installed_theme in $(cat installed_themes.txt); do
+            if ! jq -e ".[] | select(.name == \"$installed_theme\")" .github/workflows/themes.json > /dev/null; then
+              wp theme delete "$installed_theme" --allow-root
+            fi
+          done
+        '
+        rm private_key.pem
