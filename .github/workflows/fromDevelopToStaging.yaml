@@ -30,7 +30,7 @@ jobs:
         chmod 600 private_key.pem
         ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
           echo $WP_PATH &&
-          cd $WP_PATH_DEV &&
+          cd $WP_PATH &&
           git pull origin develop &&
 
           # Sync Plugins
