@@ -31,7 +31,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
           echo $WP_PATH &&
           cd $WP_PATH_DEV &&
-          git pull origin develop
+          git pull origin develop &&
 
           # Sync Plugins
           wp plugin list --field=name --allow-root > installed_plugins.txt &&
