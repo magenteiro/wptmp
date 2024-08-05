@@ -26,7 +26,9 @@ jobs:
         SSH_PORT: ${{ secrets.SSH_PORT }}
         WP_PATH: ${{ secrets.WP_PATH_DEV }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY -p $SSH_PORT $SSH_USER@$SSH_HOST '
+        echo "$SSH_PRIVATE_KEY" > private_key.pem
+        chmod 600 private_key.pem
+        ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
           cd $WP_PATH &&
           git pull origin develop
 
@@ -77,3 +79,4 @@ jobs:
             fi
           done
         '
+        rm private_key.pem
