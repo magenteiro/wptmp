@@ -24,7 +24,7 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST }}
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
-        WP_PATH: ${{ secrets.WP_PATH_DEV }}
+        WP_PATH: ${{ vars.WP_PATH_DEV }}
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
