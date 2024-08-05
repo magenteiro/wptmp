@@ -3,10 +3,21 @@
 # Sync Plugins
 wp plugin list --field=name --allow-root > installed_plugins.txt
 grep -oP '"name": "\K[^"]+' .github/workflows/plugins.json > plugins_to_sync.txt
-while IFS= read -r plugin; do
-  name=$(echo "$plugin" | awk -F'"' '{print $4}')
+
+# Debug: Print the content of plugins_to_sync.txt
+echo "Plugins to sync:"
+cat plugins_to_sync.txt
+
+while IFS= read -r name; do
+  # Debug: Print the current plugin name
+  echo "Processing plugin: $name"
+  
   status=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"status": "\K[^"]+')
   version=$(grep -A 3 "\"name\": \"$name\"" .github/workflows/plugins.json | grep -oP '"version": "\K[^"]+')
+  
+  # Debug: Print the status and version
+  echo "Status: $status, Version: $version"
+  
   if ! grep -q "$name" installed_plugins.txt; then
     wp plugin install "$name" --version="$version" --allow-root
   else
@@ -18,6 +29,7 @@ while IFS= read -r plugin; do
     wp plugin deactivate "$name" --allow-root
   fi
 done < plugins_to_sync.txt
+
 for installed_plugin in $(cat installed_plugins.txt); do
   if ! grep -q "\"name\": \"$installed_plugin\"" .github/workflows/plugins.json; then
     wp plugin delete "$installed_plugin" --allow-root
