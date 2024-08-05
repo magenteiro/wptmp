@@ -34,8 +34,6 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        scp -i private_key.pem -P $SSH_PORT .github/workflows/scripts/syncPlugins.sh $SSH_USER@$SSH_HOST:/tmp/syncPlugins.sh
-        scp -i private_key.pem -P $SSH_PORT .github/workflows/scripts/syncThemes.sh $SSH_USER@$SSH_HOST:/tmp/syncThemes.sh
         ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
           echo "WP_PATH: $WP_PATH" &&
           pwd &&
@@ -43,7 +41,7 @@ jobs:
           cd "$WP_PATH" &&
           cat estaemdev.txt &&
           git pull origin develop &&
-          bash /tmp/syncPlugins.sh &&
-          bash /tmp/syncThemes.sh
+          bash .github/workflows/scripts/syncPlugins.sh &&
+          bash .github/workflows/scripts/syncThemes.sh
         '
         rm private_key.pem
