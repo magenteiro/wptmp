@@ -19,13 +19,17 @@ while IFS= read -r name; do
   echo "Status: $status, Version: $version"
   
   if ! grep -q "$name" installed_plugins.txt; then
+    echo "Installing plugin: $name"
     wp plugin install "$name" --version="$version" --allow-root
   else
+    echo "Updating plugin: $name"
     wp plugin update "$name" --version="$version" --allow-root
   fi
   if [ "$status" = "active" ]; then
+    echo "Activating plugin: $name"
     wp plugin activate "$name" --allow-root
   else
+    echo "Deactivating plugin: $name"
     wp plugin deactivate "$name" --allow-root
   fi
 done < plugins_to_sync.txt

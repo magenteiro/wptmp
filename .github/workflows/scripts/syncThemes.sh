@@ -20,11 +20,14 @@ while IFS= read -r name; do
   echo "Status: $status, Version: $version, Update Version: $update_version"
   
   if ! grep -q "$name" installed_themes.txt; then
+    echo "Installing theme: $name"
     wp theme install "$name" --version="$version" --allow-root
   else
+    echo "Updating theme: $name"
     wp theme update "$name" --version="$update_version" --allow-root
   fi
   if [ "$status" = "active" ]; then
+    echo "Activating theme: $name"
     wp theme activate "$name" --allow-root
   fi
 done < themes_to_sync.txt
