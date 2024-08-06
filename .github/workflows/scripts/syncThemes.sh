@@ -31,6 +31,7 @@ done < themes_to_sync.txt
 
 for installed_theme in $(cat installed_themes.txt); do
   if ! grep -q "\"name\": \"$installed_theme\"" .github/workflows/themes.json; then
+    echo "Deleting theme: $installed_theme"
     wp theme delete "$installed_theme" --allow-root
   fi
 done

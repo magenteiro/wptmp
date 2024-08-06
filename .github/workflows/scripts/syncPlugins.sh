@@ -32,6 +32,7 @@ done < plugins_to_sync.txt
 
 for installed_plugin in $(cat installed_plugins.txt); do
   if ! grep -q "\"name\": \"$installed_plugin\"" .github/workflows/plugins.json; then
+    echo "Deleting plugin: $installed_plugin"
     wp plugin delete "$installed_plugin" --allow-root
   fi
 done
