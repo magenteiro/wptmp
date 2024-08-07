@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Set locale environment variables
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # Sync Themes
 wp theme list --field=name --allow-root > installed_themes.txt
 grep -oP '"name": "\K[^"]+' .github/workflows/themes.json > themes_to_sync.txt

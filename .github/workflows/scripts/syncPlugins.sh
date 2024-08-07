@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Set locale environment variables
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # Sync Plugins
 wp plugin list --field=name --allow-root > installed_plugins.txt
 grep -oP '"name": "\K[^"]+' .github/workflows/plugins.json > plugins_to_sync.txt
@@ -7,6 +12,11 @@ grep -oP '"name": "\K[^"]+' .github/workflows/plugins.json > plugins_to_sync.txt
 # Debug: Print the content of plugins_to_sync.txt
 echo "Plugins to sync:"
 cat plugins_to_sync.txt
+
+# Debug: Print the content of installed_plugins.txt
+echo "Currently installed plugins:"
+cat installed_plugins.txt
+
 
 while IFS= read -r name; do
   # Debug: Print the current plugin name
