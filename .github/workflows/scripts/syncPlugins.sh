@@ -42,3 +42,6 @@ while IFS=, read -r name status; do
     wp plugin deactivate "$name" --allow-root
   fi
 done < plugins_to_sync.txt
+
+# Clean up temporary files
+rm -f plugins_to_sync_names.txt plugins_to_sync_statuses.txt plugins_to_sync.txt installed_plugins.txt
