@@ -37,8 +37,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
           echo "WP_PATH: $WP_PATH" &&
           pwd &&
-          ls -la &&
-          cd wptmp-dev.ricardomartins.net.br &&
+          cd "$WP_PATH" &&
           cat estaemdev.txt &&
           git pull origin develop &&
           bash .github/workflows/scripts/syncPlugins.sh &&
