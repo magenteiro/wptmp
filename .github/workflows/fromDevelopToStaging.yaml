@@ -35,9 +35,9 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
         ssh -o StrictHostKeyChecking=no -i private_key.pem -p $SSH_PORT $SSH_USER@$SSH_HOST '
-          echo "WP_PATH: $WP_PATH" &&
+          echo "WP_PATH: ${{ vars.WP_DEV_DIR_FROM_HOME }}" &&
           pwd &&
-          cd "$WP_PATH" &&
+          cd "${{ vars.WP_DEV_DIR_FROM_HOME }}" &&
           cat estaemdev.txt &&
           git pull origin develop &&
           bash .github/workflows/scripts/syncPlugins.sh &&
