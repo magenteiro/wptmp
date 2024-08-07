@@ -29,7 +29,7 @@ while IFS=, read -r name status; do
   echo "Processing plugin: $name, Status: $status"
 
   # Check if the plugin is already installed with the same status
-  if grep -q "$name $status" installed_plugins.txt; then
+  if grep -Pq "$name\t+$status" installed_plugins.txt; then
     echo "Plugin $name is already installed with status $status. Skipping."
     continue
   fi
