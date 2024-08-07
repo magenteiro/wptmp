@@ -6,7 +6,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # List installed plugins with status
-wp plugin list --fields=name,status --allow-root > installed_plugins.txt
+wp plugin list --fields=name,status --allow-root | tr -s ' ' | cut -d ' ' -f1,2 > installed_plugins.txt
 
 # Extract names and statuses of plugins to be synchronized
 grep -oP '"name": "\K[^"]+' .github/workflows/plugins.json > plugins_to_sync_names.txt
@@ -29,7 +29,7 @@ while IFS=, read -r name status; do
   echo "Processing plugin: $name, Status: $status"
 
   # Check if the plugin is already installed with the same status
-  if grep -q "$name,$status" installed_plugins.txt; then
+  if grep -q "$name $status" installed_plugins.txt; then
     echo "Plugin $name is already installed with status $status. Skipping."
     continue
   fi
