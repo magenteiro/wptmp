@@ -16,34 +16,10 @@
     "auto_update": "off"
   },
   {
-    "name": "hello",
-    "status": "inactive",
-    "update": "none",
-    "version": "1.7.2",
-    "update_version": "",
-    "auto_update": "off"
-  },
-  {
     "name": "hello-dolly",
     "status": "active",
     "update": "none",
     "version": "1.7.2",
-    "update_version": "",
-    "auto_update": "off"
-  },
-  {
-    "name": "mainwp",
-    "status": "active",
-    "update": "none",
-    "version": "5.1.1",
-    "update_version": "",
-    "auto_update": "off"
-  },
-  {
-    "name": "safe-svg",
-    "status": "inactive",
-    "update": "none",
-    "version": "2.2.5",
     "update_version": "",
     "auto_update": "off"
   },
@@ -53,14 +29,6 @@
     "update": "available",
     "version": "9.0.2",
     "update_version": "9.1.4",
-    "auto_update": "off"
-  },
-  {
-    "name": "wp-migrate-db",
-    "status": "active",
-    "update": "none",
-    "version": "2.6.11",
-    "update_version": "",
     "auto_update": "off"
   }
 ]
